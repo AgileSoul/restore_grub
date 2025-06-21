@@ -10,14 +10,14 @@ clear
 
 echo "Showing partitions names"
 fdisk -l
-sleep 1
+sleep 0.5
 
-echo "Enter disk identifier"
-read diskId
-echo "Enter EFI parition identifier"
-read efiPartitionId
-echo "Enter partition identifier"
-read partitionId
+read -p "Enter disk identifier" diskId
+diskId= ${diskId:-"Invitado"}
+read -p "Enter EFI parition identifier" efiPartitionId
+efiPartitionId= ${efiPartitionId:-"Invitado"}
+read -p "Enter partition identifier" partitionId
+partitionId= ${partitionId:-"Invitado"}
 
 mount /dev/$partitionId /mnt
 mkdir -p /mnt/boot/efi
@@ -27,7 +27,5 @@ mount --rbind /dev/pts /mnt/dev/pts
 mount --rbind /proc /mnt/proc 
 mount --rbind /sys /mnt/sys
 
-chroot /mnt <<EOF
-grub-install --recheck /dev/$diskId
-update-grub2
-EOF
+chroot /mnt /bin/bash -c "grub-install --recheck /dev/$diskId && update-grub2"
+
