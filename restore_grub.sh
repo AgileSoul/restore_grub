@@ -13,11 +13,11 @@ fdisk -l
 sleep 0.5
 
 read -p "Enter disk identifier" diskId
-diskId= ${diskId:-"Invitado"}
+diskId=${diskId:-"nvme0n1"}
 read -p "Enter EFI parition identifier" efiPartitionId
-efiPartitionId= ${efiPartitionId:-"Invitado"}
+efiPartitionId=${efiPartitionId:-"nvme0n1p1"}
 read -p "Enter partition identifier" partitionId
-partitionId= ${partitionId:-"Invitado"}
+partitionId=${partitionId:-"nvme0n1p4"}
 
 mount /dev/$partitionId /mnt
 mkdir -p /mnt/boot/efi
